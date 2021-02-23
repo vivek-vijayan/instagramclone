@@ -1,0 +1,70 @@
+*{
+  object-fit: contain;
+  margin: 0%;
+  text-align: left;
+}
+
+.app-header-area{
+  margin-left: 15%;
+}
+
+.app-header{
+  padding:15px;
+  
+  padding-left: 200px;
+  padding-bottom: 5px;
+  background-color: white;
+  border-bottom: 0.1px solid rgb(233, 233, 233);
+}
+
+.loginButton{
+  background-color: rgb(67, 126, 253);
+  padding: 5px;
+  font-size: 13px;
+  text-align: center;
+  color: white;
+  border : none;
+  border-radius: 5px;
+}
+
+.SearchBox{
+  position: relative;
+}
+.SearchBoxLogo{
+  position: absolute;
+  bottom:12px;
+  left:10px;
+  width:10px;
+  height:10px;
+}
+.SearchBoxInput{
+  margin-bottom: 5px;
+  background-color: #fafafa;
+  outline: none;
+  border:1px solid #eceaea;
+  border-radius: 2px;
+  padding-left: 25px;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+
+/* for Mobile phone */
+@media (max-width:600px){
+  .app-header{
+    padding:15px;
+    background-color: white;
+    padding-left: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(233, 233, 233);
+  }
+  .app-header-area{
+    margin-left: 2%;
+  }
+  .SearchBox{
+    display: none;
+  }
+  .loginButton{
+    display: none;
+  }
+}
