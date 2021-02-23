@@ -1,0 +1,9 @@
+*{
+  object-fit: contain;
+  margin: 0%;
+  text-align: left;
+}
+
+body{
+  background-color: #fafafa;
+}
