@@ -1,0 +1,17 @@
+.link {
+    color: rgb(1, 142, 254);
+    font-weight: 600;
+}
+
+.credits{
+    color: rgb(195, 195, 195);
+    font-size: 11px;
+    text-align: left;
+    padding: 20px;
+}
+
+@media (max-width: 600px){
+    .credits{
+        display: none;
+    }
+}

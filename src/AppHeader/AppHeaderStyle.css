@@ -5,11 +5,13 @@
   }
   
   .app-header-area{
-    text-align: center;
-    
+    text-align: right;
+    padding-right: 40px;
   }
   .positionFixed{
     position: fixed;
+    top: 0;
+    z-index: 10;
   }
 
   .text-center{
@@ -41,7 +43,7 @@
   .SearchBoxLogo{
     position: absolute;
     bottom:12px;
-    left:60px;
+    left:155px;
     width:10px;
     height:10px;
   }
@@ -57,6 +59,7 @@
     font-size: 14px;
     width: 250px;
     text-align: center;
+    transition: ease 0.5s;
   }
   .SearchBoxInput:focus{
     margin-bottom: 5px;
@@ -70,15 +73,14 @@
     font-size: 14px;
     width: 250px;
     text-align: left;
+    transition: ease 0.5s;
   }
   .profilepicture{
     border-radius: 50%;
     width: 20px;
   }
 
-  .center-alignment{
-      margin-left: 100px;
-  }
+  
   .mobile-use-UI-bottom-controls{
     display: none;
   }
@@ -92,6 +94,12 @@
       padding-bottom: 5px;
       border-bottom: 1px solid rgb(233, 233, 233);
     }
+
+    .app-header-area{
+      text-align: center;
+      
+    }
+
     .app-header-area{
       margin-left: 2%;
     }
@@ -114,6 +122,7 @@
       background-color: white;
       border-top: 0.1px solid rgb(233, 233, 233);
       display: block;
+      z-index: 10;
     }
   }
   

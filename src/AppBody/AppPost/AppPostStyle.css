@@ -1,0 +1,30 @@
+
+.card-top-info{
+    padding: 10px;
+}
+
+.card-top-name{
+    margin-left: 10px;
+}
+
+.postUserName{
+    color: black;
+    font-weight: 600;
+    font-size: 13.5px;
+}
+
+@media (max-width:600px){
+    .card-top-info{
+        padding: 5px;
+    }
+    
+    .card-top-name{
+        margin-left: 0px;
+    }
+    
+    .postUserName{
+        color: black;
+        font-weight: 600;
+        font-size: 13.5px;
+    }
+}

@@ -13,7 +13,7 @@ const useStyle = makeStyles((theme) => ({
         width: theme.spacing(3),
         height: theme.spacing(3),
         fontSize: 11,
-        backgroundColor: 'grey'
+        backgroundColor: 'green'
     }
 }))
 
@@ -25,12 +25,12 @@ export default function AppHeader() {
                 <div className="row ">
                     <div className="container">
                         <div className="row">
-                            <div className="col-sm-4 app-header-area">
+                            <div className="col-sm-3 app-header-area">
                                 <img src={InstagramLogo}
                                     alt="instagram"
                                     width="100px"/>
                             </div>
-                            <div className="col-sm-4 hide-mobile">
+                            <div className="col-sm-6 hide-mobile">
                                 <form>
                                     <div className="SearchBox">
                                         <input className="SearchBoxInput" type="text" placeholder="Search"></input>
@@ -38,13 +38,15 @@ export default function AppHeader() {
                                     </div>
                                 </form>
                             </div>
-                            <div className="col-sm-4 hide-mobile">
+                            <div className="col-sm-3 hide-mobile">
                                 <div className="row">
-                                    <div className="col-2 text-center"><img src={HomeLogo} alt="home"
+                                    <div className="col-sm-2 text-center"><img src={HomeLogo} alt="home"
                                             width="40px"/></div>
-                                    <div className="col-2 text-center"><img src={HeartLogo} alt="heart"
+                                    <div className="col-sm-2 text-center"><img src={ProfileLogo} alt="heart"
                                             width="30px"/></div>
-                                    <div className="col-2">
+                                    <div className="col-sm-2 text-center"><img src={HeartLogo} alt="heart"
+                                            width="30px"/></div>
+                                    <div className="col-sm-2">
                                         <Avatar alt='Vivek Vijayan'
                                             className={
                                                 avatarStyle.small
