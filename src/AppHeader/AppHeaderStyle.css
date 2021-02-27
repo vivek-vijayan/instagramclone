@@ -1,0 +1,128 @@
+*{
+    object-fit: contain;
+    margin: 0%;
+    text-align: left;
+  }
+  
+  .app-header-area{
+    text-align: center;
+    padding-left: 30px;
+  }
+  .positionFixed{
+    position: fixed;
+    top: 0;
+    z-index: 10;
+  }
+
+  .text-center{
+    text-align: center;
+  }
+  
+  .app-header{
+    text-align: center;
+    padding:15px;
+    padding-bottom: 5px;
+    background-color: white;
+    border-bottom: 0.1px solid rgb(233, 233, 233);
+  }
+  
+  .loginButton{
+    background-color: rgb(67, 126, 253);
+    padding: 5px;
+    font-size: 13px;
+    text-align: center;
+    color: white;
+    border : none;
+    border-radius: 5px;
+  }
+  
+  .SearchBox{
+    position: relative;
+    text-align: center;
+  }
+  .SearchBoxLogo{
+    position: absolute;
+    bottom:12px;
+    left:155px;
+    width:10px;
+    height:10px;
+  }
+  .SearchBoxInput{
+    margin-bottom: 5px;
+    background-color: #fafafa;
+    outline: none;
+    border:1px solid #eceaea;
+    border-radius: 5px;
+    padding:2px;
+    padding-left: 0px;
+    font-weight: 300;
+    font-size: 14px;
+    width: 250px;
+    text-align: center;
+    transition: ease 0.5s;
+  }
+  .SearchBoxInput:focus{
+    margin-bottom: 5px;
+    background-color: #fafafa;
+    outline: none;
+    border:1px solid #eceaea;
+    border-radius: 5px;
+    padding:2px;
+    padding-left: 25px;
+    font-weight: 300;
+    font-size: 14px;
+    width: 250px;
+    text-align: left;
+    transition: ease 0.5s;
+  }
+  .profilepicture{
+    border-radius: 50%;
+    width: 20px;
+  }
+
+  
+  .mobile-use-UI-bottom-controls{
+    display: none;
+  }
+  
+  /* for Mobile phone */
+  @media (max-width:600px){
+    .app-header{
+      padding:15px;
+      background-color: white;
+      padding-left: 20px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgb(233, 233, 233);
+    }
+
+    .app-header-area{
+      text-align: center;
+      padding-left: 0px;
+    }
+
+    .app-header-area{
+      margin-left: 2%;
+    }
+    .SearchBox{
+      display: none;
+    }
+    .loginButton{
+      display: none;
+    }
+    .hide-mobile{
+      display: none;
+    }
+    .mobile-use-UI-bottom-controls{
+      position: fixed;
+      width: 100%;
+      bottom: 0px;
+      text-align: center;
+      padding:15px;
+      padding-bottom: 5px;
+      background-color: white;
+      border-top: 0.1px solid rgb(233, 233, 233);
+      display: block;
+      z-index: 10;
+    }
+  }
+  

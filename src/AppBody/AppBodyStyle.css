@@ -1,0 +1,14 @@
+.frame{
+    position: relative;
+    margin-top: 100px;
+    margin-left: 220px;
+}
+
+@media(max-width:600px){
+    .frame{
+        position: relative;
+        padding-left: 0px;
+        margin-top: 80px;
+        margin-left: 0px;
+    }
+}
