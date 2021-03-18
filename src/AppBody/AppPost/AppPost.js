@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './AppPostStyle.css'
 import { Avatar, makeStyles } from '@material-ui/core'
 import SamplePost from './static/SamplePostOr.jpg'
+import AppPostComments from './AppPostComment/AppPostComments'
 
 import Heart from './static/like.png'
 import WhiteHeart from './static/whiteheart.png'
@@ -16,7 +17,8 @@ const usestyle = makeStyles((theme) => ({
     medium: {
         width: theme.spacing(4),
         height: theme.spacing(4),
-        backgroundColor: 'purple'
+        backgroundColor: 'purple',
+        fontSize: 13
     }
 }));
 
@@ -33,7 +35,6 @@ export default function AppPost() {
     const bind = useDoubleTap((event) => {
         LikeActionHandler()
     });
-
 
     function AddLike() {
         setlikes(preLikes => preLikes + 1);
@@ -145,6 +146,15 @@ export default function AppPost() {
                                 </div>
                                 <div className="row" style={{ paddingLeft: 10 }}>
                                     <p style={{ fontSize: 14, fontWeight: 600 }}>{likes} Likes</p>
+                                    
+                                </div>
+                                <div className="row" style={{ paddingLeft: 10 }}>
+                                    <p style={{ fontSize: 12, fontWeight: 500, color: 'gray' }}>
+                                        View all comments
+                                    </p>
+                                </div>
+                                <div className="row" style={{ marginBottom: 20 }}>
+                                    <AppPostComments name="vivek"></AppPostComments>
                                 </div>
                             </div>
                         </div>

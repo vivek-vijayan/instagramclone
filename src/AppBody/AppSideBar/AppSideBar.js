@@ -7,7 +7,8 @@ const useStyle = makeStyles((theme) => ({
     big: {
         width: theme.spacing(6),
         height: theme.spacing(6),
-        backgroundColor: 'green'
+        backgroundColor: 'green',
+        fontSize: 15
     }
 }))
 
