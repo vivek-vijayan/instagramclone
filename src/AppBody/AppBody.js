@@ -11,7 +11,7 @@ export default function AppBody() {
                 <div className="row">
                     <div className="col-sm-6">
                         <AppPost></AppPost>
-
+                        <AppPost></AppPost>
                     </div>
                     <div className="col-sm-4">
                         <AppSideBar></AppSideBar>

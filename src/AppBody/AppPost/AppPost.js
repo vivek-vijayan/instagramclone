@@ -11,8 +11,6 @@ import Share from './static/share.png'
 import Comment from './static/comment.png'
 import { useDoubleTap } from 'use-double-tap'
 
-
-
 const usestyle = makeStyles((theme) => ({
     medium: {
         width: theme.spacing(4),
@@ -21,7 +19,6 @@ const usestyle = makeStyles((theme) => ({
         fontSize: 13
     }
 }));
-
 
 export default function AppPost() {
 
@@ -155,6 +152,18 @@ export default function AppPost() {
                                 <div className="row" style={{ marginBottom: 20 }}>
                                     <AppPostComments name="vivek"></AppPostComments>
                                 </div>
+                                <div className="row" style={{ paddingLeft: 10 }}>
+                                    <p style={{ fontSize: 11, fontWeight: 500, color: 'gray', }}>
+                                        1 HOUR AGO
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                        {/* Post a comment */}
+                        <div className="row addComment">
+                            <div className="" >
+                                <input className="addCommentInput" placeholder="Post a comment"></input>
                             </div>
                         </div>
                     </div>

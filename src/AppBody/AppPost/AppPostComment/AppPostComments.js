@@ -46,7 +46,7 @@ export default function AppPostComments(props) {
             <div className="comments" style={{ fontSize: 14 }}>
                 <div className="row" style={{ paddingLeft: 10 }}>
                     <div className="col-sm-11">
-                        <span style={{ fontWeight: 600 }}>{username}</span>
+                        <span style={{ fontWeight: 700, paddingRight:10 }}>{username}</span>
                         <span>{comment}</span>
                         <span style={{ fontSize: 10, color: 'gray', paddingLeft: 10, fontWeight: 500 }}>20 min ago</span>
                     </div>
