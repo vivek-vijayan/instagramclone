@@ -91,13 +91,13 @@ export default function AppPost() {
                                 style={
                                     { padding: 0 }
                                 }>
-                                
+
                                 <img src={SamplePost} {...bind}
                                     width="100%"
                                     alt="post" />
-                                    <div class="centered">
-                                        <img src={WhiteHeart} className={PopUpHeartWhite} alt="whiteheart" width="100px"/>
-                                    </div>
+                                <div class="centered">
+                                    <img src={WhiteHeart} className={PopUpHeartWhite} alt="whiteheart" width="100px" />
+                                </div>
                             </div>
                         </div>
 
@@ -119,7 +119,7 @@ export default function AppPost() {
                                             className={AnimeClass}
                                             width="30px"
                                             alt="postlike_dislike"></img>
-                                            
+
                                     </div>
                                     <div className="col-sm-1"
                                         style={
@@ -145,11 +145,10 @@ export default function AppPost() {
                                     </div>
                                 </div>
                                 <div className="row" style={{ paddingLeft: 10 }}>
-                                    <p style={{ fontSize: 14, fontWeight: 600 }}>{likes} Likes</p>
-                                    
+                                    <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>
                                 </div>
                                 <div className="row" style={{ paddingLeft: 10 }}>
-                                    <p style={{ fontSize: 12, fontWeight: 500, color: 'gray' }}>
+                                    <p style={{ fontSize: 12, fontWeight: 500, color: 'gray', marginBottom: 5 }}>
                                         View all comments
                                     </p>
                                 </div>
