@@ -4,11 +4,13 @@ import { Avatar, makeStyles } from '@material-ui/core'
 import SamplePost from './static/SamplePostOr.jpg'
 import AppPostComments from './AppPostComment/AppPostComments'
 
+
 import Heart from './static/like.png'
 import WhiteHeart from './static/whiteheart.png'
 import HeartRed from './static/like_red.png'
 import Share from './static/share.png'
 import Comment from './static/comment.png'
+import SmileyFace from './static/SmileyFace.png'
 import { useDoubleTap } from 'use-double-tap'
 
 const usestyle = makeStyles((theme) => ({
@@ -162,8 +164,16 @@ export default function AppPost() {
                         </div>
                         {/* Post a comment */}
                         <div className="row addComment">
-                            <div className="" >
-                                <input className="addCommentInput" placeholder="Post a comment"></input>
+                            <div className="col-sm-1">
+                                <img src={SmileyFace} alt="smileyFace" width="40px" style={{ paddingTop: "10px" }}></img>
+                            </div>
+                            <div className="col-sm-9" >
+                                <input className="addCommentInput" placeholder="Add a comment..."></input>
+                            </div>
+                            <div className="col-sm-2">
+                                <button className="PostButton">
+                                    Post
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core'
 import React, { Component } from 'react'
 import "./AppPostComments.css";
-import AppPostCommentReply from "./AppPostCommentReply/AppPostCommentReply";
 import HeartRed from '../static/like_red.png'
 import Heart from '../static/like.png'
 import { useDoubleTap } from 'use-double-tap'
@@ -46,16 +45,17 @@ export default function AppPostComments(props) {
             <div className="comments" style={{ fontSize: 14 }}>
                 <div className="row" style={{ paddingLeft: 10 }}>
                     <div className="col-sm-11">
-                        <span style={{ fontWeight: 700, paddingRight:10 }}>{username}</span>
+                        <span style={{ fontWeight: 700, paddingRight: 10 }}>{username}</span>
                         <span>{comment}</span>
                         <span style={{ fontSize: 10, color: 'gray', paddingLeft: 10, fontWeight: 500 }}>20 min ago</span>
                     </div>
-                    <div className="col-sm-1" style={{position:'absolute', right: 10}}>
+                    <div className="col-sm-1" style={{ position: 'absolute', right: 10 }}>
                         <img src={HeartPng} style={{ marginLeft: 10, }} className={AnimeClass} alt="whiteheart" width="15px" />
                     </div>
                     <div style={{ paddingLeft: 20 }}>
-                        <AppPostCommentReply></AppPostCommentReply>
+                        inner reply. need to practice more on this keyboard                        
                     </div>
+                    
                 </div>
             </div>
         </div>
