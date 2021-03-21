@@ -3,51 +3,39 @@ import AppPost from './AppPost/AppPost'
 import AppSideBar from "./AppSideBar/AppSideBar";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './AppBodyStyle.css'
-import FirebaseInstagramConnectivity from '../FirebaseCenter/FirebaseInstagram.js'
+import {firebaseInsta} from '../FirebaseCenter/FirebaseInstagram.js'
+import moment from 'moment'
 
 // Firebase connectvity
-const firebaseDB = FirebaseInstagramConnectivity.firestore();
-const userProfileID = "vivek"
+const firebaseDB = firebaseInsta.firestore();
+const userProfileID = "post"
 
 export default function AppBody() {
-    const [instagramPost, setInstagramPost] = useState({
-        postID: 0,
-        postUserName: "Vivek Vijayan",
-        postMediaURL: items[item].mediaURL ? items[item].mediaURL : "No data",
-        postTotallikes: items[item].totalLikes ? items[item].totalLikes : "No data",
-        postTotalComments: items[item].totalComments ? items[item].totalComments : "No data",
-    })
+    const [instagramPost, setInstagramPost] = useState([])
 
-    // dbReference.on('value', (snapshot) => {
-    //     let items = snapshot.val();
-    //     for (let item in items) {
-    //         instagramPost.push({
-    //             postID: item,
-    //             postUserName: items[item].username ? items[item].username : "No data",
-    //             postMediaURL: items[item].mediaURL ? items[item].mediaURL : "No data",
-    //             postTotallikes: items[item].totalLikes ? items[item].totalLikes : "No data",
-    //             postTotalComments: items[item].totalComments ? items[item].totalComments : "No data",
-    //         })
-    //     }
-    // });
+    // getting the post information from the server 🚀
     useEffect(() => {
-        firebaseDB.collection('post').onSnapshot(snapshot => {
+        firebaseDB.collection('InstagramPost').onSnapshot(snapshot => {
+            setInstagramPost(snapshot.docs.map(doc => doc.data()))
+        })  
+    });
 
-        })
-    }, [])
     return (
         <div className="frame">
             <div className="container-fluid" >
                 <div className="row">
                     <div className="col-sm-6">
-                        {instagramPost.map((item) => {
-                            return (
-                                <div>
-                                    <p>Hello world</p>
-                                </div>
-                            )
-                        })}
-                        <AppPost></AppPost>
+                        {
+                            instagramPost.map(item => {
+                                return (
+                                    <div>
+                                        <AppPost postUsername={item.postUserName}
+                                            postMediaURL={item.postMediaURL}
+                                            postTotalLikes={item.postTotallikes}
+                                            postUploadedTimeStamp={item.postUploadedTimeStamp} />
+                                    </div>
+                                )
+                            })}
                     </div>
                     <div className="col-sm-4">
                         <AppSideBar></AppSideBar>

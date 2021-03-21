@@ -13,23 +13,35 @@ import Comment from './static/comment.png'
 import SmileyFace from './static/SmileyFace.png'
 import { useDoubleTap } from 'use-double-tap'
 
+var blankUsernameBackgroundColors = ['purple', 'red', 'green', 'orange']
+var blankUsernameBackgroundColor = blankUsernameBackgroundColors[Math.floor(Math.random() * blankUsernameBackgroundColors.length)];
+
 const usestyle = makeStyles((theme) => ({
     medium: {
         width: theme.spacing(4),
         height: theme.spacing(4),
-        backgroundColor: 'purple',
+        backgroundColor: blankUsernameBackgroundColor,
         fontSize: 13
     }
 }));
 
-export default function AppPost() {
+export default function AppPost({ postUsername, postMediaURL, postTotalComments, postTotalLikes, postUploadedTimeStamp }) {
 
     const classes = usestyle();
-    const [likes, setlikes] = useState(0);
+    const [likes, setlikes] = useState(postTotalLikes);
     const [ILike, setILike] = useState(false)
     const [AnimeClass, setAnimeClass] = useState("")
     const [HeartPng, setHeartPng] = useState(Heart)
     const [PopUpHeartWhite, setPopUpHeartWhite] = useState("likePostWhiteHide")
+
+    var LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>;
+
+    function LikesStatusUpdater() {
+        if (likes === 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Like</p>
+        else if (likes > 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>
+        else LikesInformation = ""
+    }
+
 
     const bind = useDoubleTap((event) => {
         LikeActionHandler()
@@ -41,6 +53,7 @@ export default function AppPost() {
         setAnimeClass("likePost")
         setHeartPng(HeartRed)
         setPopUpHeartWhite("likePostWhite")
+        LikesStatusUpdater()
     }
     function DisLike() {
         setlikes(preLikes => preLikes - 1);
@@ -48,13 +61,15 @@ export default function AppPost() {
         setAnimeClass("")
         setHeartPng(Heart)
         setPopUpHeartWhite("likePostWhiteHide")
+        LikesStatusUpdater()
     }
-
 
     function LikeActionHandler() {
         ILike ? DisLike() : AddLike()
     }
 
+    // Likes status initiator 🧡
+    LikesStatusUpdater()
 
     return (
         <div style={
@@ -74,13 +89,13 @@ export default function AppPost() {
                                 <table>
                                     <tr>
                                         <td>
-                                            <Avatar src="//" alt="User"
+                                            <Avatar src="//" alt={postUsername}
                                                 className={
                                                     classes.medium
                                                 }></Avatar>
                                         </td>
                                         <td className="col-sm-6 card-top-name postUserName">
-                                            UserName Sample </td>
+                                            {postUsername} </td>
                                     </tr>
                                 </table>
                             </div>
@@ -91,7 +106,7 @@ export default function AppPost() {
                                     { padding: 0 }
                                 }>
 
-                                <img src={SamplePost} {...bind}
+                                <img src={postMediaURL} {...bind}
                                     width="100%"
                                     alt="post" />
                                 <div class="centered">
@@ -144,7 +159,7 @@ export default function AppPost() {
                                     </div>
                                 </div>
                                 <div className="row" style={{ paddingLeft: 10 }}>
-                                    <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>
+                                    {LikesInformation}
                                 </div>
                                 <div className="row" style={{ paddingLeft: 10 }}>
                                     <p style={{ fontSize: 12, fontWeight: 500, color: 'gray', marginBottom: 5 }}>
@@ -156,7 +171,7 @@ export default function AppPost() {
                                 </div>
                                 <div className="row" style={{ paddingLeft: 10 }}>
                                     <p style={{ fontSize: 11, fontWeight: 500, color: 'gray', }}>
-                                        1 HOUR AGO
+                                        {postUploadedTimeStamp}
                                     </p>
                                 </div>
 
@@ -164,13 +179,13 @@ export default function AppPost() {
                         </div>
                         {/* Post a comment */}
                         <div className="row addComment">
-                            <div className="col-sm-1">
+                            <div className="col-1">
                                 <img src={SmileyFace} alt="smileyFace" width="40px" style={{ paddingTop: "10px" }}></img>
                             </div>
-                            <div className="col-sm-9" >
+                            <div className="col-9" >
                                 <input className="addCommentInput" placeholder="Add a comment..."></input>
                             </div>
-                            <div className="col-sm-2">
+                            <div className="col-2">
                                 <button className="PostButton">
                                     Post
                                 </button>
