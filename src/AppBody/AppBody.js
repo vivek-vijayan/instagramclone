@@ -16,7 +16,7 @@ export default function AppBody() {
     // getting the post information from the server 🚀
     useEffect(() => {
         firebaseDB.collection('InstagramPost').onSnapshot(snapshot => {
-            setInstagramPost(snapshot.docs.map(doc => doc.data()))
+            setInstagramPost(snapshot.docs.map(doc => doc))
         })  
     });
 
@@ -29,10 +29,10 @@ export default function AppBody() {
                             instagramPost.map(item => {
                                 return (
                                     <div>
-                                        <AppPost postUsername={item.postUserName}
-                                            postMediaURL={item.postMediaURL}
-                                            postTotalLikes={item.postTotallikes}
-                                            postUploadedTimeStamp={item.postUploadedTimeStamp} />
+                                        <AppPost postID = {item.id} postUsername={item.data().postUserName}
+                                            postMediaURL={item.data().postMediaURL}
+                                            postTotalLikes={item.data().postTotallikes}
+                                            postUploadedTimeStamp={item.data().postUploadedTimeStamp} />
                                     </div>
                                 )
                             })}

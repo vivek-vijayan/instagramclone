@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './AppPostStyle.css'
 import { Avatar, makeStyles } from '@material-ui/core'
 import SamplePost from './static/SamplePostOr.jpg'
 import AppPostComments from './AppPostComment/AppPostComments'
-
+import { firebaseInsta } from '../../FirebaseCenter/FirebaseInstagram.js'
 
 import Heart from './static/like.png'
 import WhiteHeart from './static/whiteheart.png'
@@ -25,7 +25,21 @@ const usestyle = makeStyles((theme) => ({
     }
 }));
 
-export default function AppPost({ postUsername, postMediaURL, postTotalComments, postTotalLikes, postUploadedTimeStamp }) {
+export default function AppPost({ postID, postUsername, postMediaURL, postTotalComments, postTotalLikes, postUploadedTimeStamp }) {
+
+    // Realtime data collection 📮
+    const FirebasePostRealTimeData = firebaseInsta.database();
+
+    const [currentLike, setCurrentLike] = useState(0)
+
+    let likesCount = FirebasePostRealTimeData.ref(`post/${postID}/likesCount`);
+
+    useEffect(() => {
+        likesCount.on('value', snapshot => {
+            setCurrentLike(snapshot.val())
+            LikesStatusUpdater()
+        })
+    }, [])
 
     const classes = usestyle();
     const [likes, setlikes] = useState(postTotalLikes);
@@ -34,14 +48,17 @@ export default function AppPost({ postUsername, postMediaURL, postTotalComments,
     const [HeartPng, setHeartPng] = useState(Heart)
     const [PopUpHeartWhite, setPopUpHeartWhite] = useState("likePostWhiteHide")
 
-    var LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>;
-
+    var LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{currentLike} Likes</p>;
     function LikesStatusUpdater() {
-        if (likes === 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Like</p>
-        else if (likes > 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>
+        if (currentLike === 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{currentLike} Like</p>
+        else if (currentLike > 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{currentLike} Likes</p>
         else LikesInformation = ""
     }
 
+    // Firebase Like Update 🔥
+    function UploadPostDataToFirebase(postLikeCount) {
+
+    }
 
     const bind = useDoubleTap((event) => {
         LikeActionHandler()
@@ -54,6 +71,7 @@ export default function AppPost({ postUsername, postMediaURL, postTotalComments,
         setHeartPng(HeartRed)
         setPopUpHeartWhite("likePostWhite")
         LikesStatusUpdater()
+        UploadPostDataToFirebase(likes)
     }
     function DisLike() {
         setlikes(preLikes => preLikes - 1);
@@ -62,6 +80,7 @@ export default function AppPost({ postUsername, postMediaURL, postTotalComments,
         setHeartPng(Heart)
         setPopUpHeartWhite("likePostWhiteHide")
         LikesStatusUpdater()
+        UploadPostDataToFirebase(likes)
     }
 
     function LikeActionHandler() {
@@ -95,7 +114,7 @@ export default function AppPost({ postUsername, postMediaURL, postTotalComments,
                                                 }></Avatar>
                                         </td>
                                         <td className="col-sm-6 card-top-name postUserName">
-                                            {postUsername} </td>
+                                            {postID} </td>
                                     </tr>
                                 </table>
                             </div>
