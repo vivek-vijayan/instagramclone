@@ -30,39 +30,36 @@ export default function AppPost({ postID, postUsername, postMediaURL, postTotalC
     // Realtime data collection 📮
     const FirebasePostRealTimeData = firebaseInsta.database();
 
-    const [currentLike, setCurrentLike] = useState(0)
-
     let likesCount = FirebasePostRealTimeData.ref(`post/${postID}/likesCount`);
 
-    useEffect(() => {
-        likesCount.on('value', snapshot => {
-            setCurrentLike(snapshot.val())
-            LikesStatusUpdater()
-        })
-    }, [])
-
     const classes = usestyle();
-    const [likes, setlikes] = useState(postTotalLikes);
+    const [likes, setlikes] = useState(0);
     const [ILike, setILike] = useState(false)
     const [AnimeClass, setAnimeClass] = useState("")
     const [HeartPng, setHeartPng] = useState(Heart)
     const [PopUpHeartWhite, setPopUpHeartWhite] = useState("likePostWhiteHide")
 
-    var LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{currentLike} Likes</p>;
+    var LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>;
     function LikesStatusUpdater() {
-        if (currentLike === 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{currentLike} Like</p>
-        else if (currentLike > 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{currentLike} Likes</p>
+        if (likes === 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Like</p>
+        else if (likes > 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>
         else LikesInformation = ""
-    }
-
-    // Firebase Like Update 🔥
-    function UploadPostDataToFirebase(postLikeCount) {
-
     }
 
     const bind = useDoubleTap((event) => {
         LikeActionHandler()
     });
+
+    useEffect(() => {
+        likesCount.on('value', snapshot => {
+            setlikes(snapshot.val())
+            LikesStatusUpdater()
+        })
+    }, [])
+
+    function updateLikeDataToFirebaseDatabase(){
+        FirebasePostRealTimeData.ref(`post/${postID}`).child('likesCount').set(likes)
+    }
 
     function AddLike() {
         setlikes(preLikes => preLikes + 1);
@@ -71,7 +68,7 @@ export default function AppPost({ postID, postUsername, postMediaURL, postTotalC
         setHeartPng(HeartRed)
         setPopUpHeartWhite("likePostWhite")
         LikesStatusUpdater()
-        UploadPostDataToFirebase(likes)
+        updateLikeDataToFirebaseDatabase()
     }
     function DisLike() {
         setlikes(preLikes => preLikes - 1);
@@ -80,7 +77,7 @@ export default function AppPost({ postID, postUsername, postMediaURL, postTotalC
         setHeartPng(Heart)
         setPopUpHeartWhite("likePostWhiteHide")
         LikesStatusUpdater()
-        UploadPostDataToFirebase(likes)
+        updateLikeDataToFirebaseDatabase()
     }
 
     function LikeActionHandler() {
