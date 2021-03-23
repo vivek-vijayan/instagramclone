@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import AppPost from './AppPost/AppPost'
+import AppPostLoading from './AppPost/AppPostLoading/AppPostLoading'
 import AppSideBar from "./AppSideBar/AppSideBar";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './AppBodyStyle.css'
 import {firebaseInsta} from '../FirebaseCenter/FirebaseInstagram.js'
-import moment from 'moment'
-
 // Firebase connectvity
 const firebaseDB = firebaseInsta.firestore();
 const userProfileID = "post"
@@ -31,11 +30,12 @@ export default function AppBody() {
                                     <div>
                                         <AppPost postID = {item.id} postUsername={item.data().postUserName}
                                             postMediaURL={item.data().postMediaURL}
-                                            postTotalLikes={item.data().postTotallikes}
-                                            postUploadedTimeStamp={item.data().postUploadedTimeStamp} />
+                                            postPublishedOn={item.data().postPublishedOn}
+                                            />
                                     </div>
                                 )
                             })}
+                            <AppPostLoading></AppPostLoading>
                     </div>
                     <div className="col-sm-4">
                         <AppSideBar></AppSideBar>

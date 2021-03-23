@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './AppPostStyle.css'
 import { Avatar, makeStyles } from '@material-ui/core'
-import SamplePost from './static/SamplePostOr.jpg'
 import AppPostComments from './AppPostComment/AppPostComments'
 import { firebaseInsta } from '../../FirebaseCenter/FirebaseInstagram.js'
 
@@ -21,17 +20,17 @@ const usestyle = makeStyles((theme) => ({
         width: theme.spacing(4),
         height: theme.spacing(4),
         backgroundColor: blankUsernameBackgroundColor,
-        fontSize: 13
+        fontSize: 14
     }
 }));
 
-export default function AppPost({ postID, postUsername, postMediaURL, postTotalComments, postTotalLikes, postUploadedTimeStamp }) {
+export default function AppPost({ postID, postUsername, postMediaURL, postTotalComments, postTotalLikes, postPublishedOn }) {
 
     // Realtime data collection 📮
     const FirebasePostRealTimeData = firebaseInsta.database();
-
     let likesCount = FirebasePostRealTimeData.ref(`post/${postID}/likesCount`);
 
+    // states collections
     const classes = usestyle();
     const [likes, setlikes] = useState(0);
     const [ILike, setILike] = useState(false)
@@ -57,27 +56,21 @@ export default function AppPost({ postID, postUsername, postMediaURL, postTotalC
         })
     }, [])
 
-    function updateLikeDataToFirebaseDatabase(){
-        FirebasePostRealTimeData.ref(`post/${postID}`).child('likesCount').set(likes)
-    }
-
     function AddLike() {
-        setlikes(preLikes => preLikes + 1);
         setILike(true)
         setAnimeClass("likePost")
         setHeartPng(HeartRed)
         setPopUpHeartWhite("likePostWhite")
         LikesStatusUpdater()
-        updateLikeDataToFirebaseDatabase()
+        FirebasePostRealTimeData.ref(`post/${postID}`).child('likesCount').set(likes + 1)
     }
     function DisLike() {
-        setlikes(preLikes => preLikes - 1);
         setILike(false)
         setAnimeClass("")
         setHeartPng(Heart)
         setPopUpHeartWhite("likePostWhiteHide")
         LikesStatusUpdater()
-        updateLikeDataToFirebaseDatabase()
+        FirebasePostRealTimeData.ref(`post/${postID}`).child('likesCount').set(likes - 1)
     }
 
     function LikeActionHandler() {
@@ -111,7 +104,7 @@ export default function AppPost({ postID, postUsername, postMediaURL, postTotalC
                                                 }></Avatar>
                                         </td>
                                         <td className="col-sm-6 card-top-name postUserName">
-                                            {postID} </td>
+                                            {postUsername} </td>
                                     </tr>
                                 </table>
                             </div>
@@ -121,7 +114,6 @@ export default function AppPost({ postID, postUsername, postMediaURL, postTotalC
                                 style={
                                     { padding: 0 }
                                 }>
-
                                 <img src={postMediaURL} {...bind}
                                     width="100%"
                                     alt="post" />
@@ -187,10 +179,9 @@ export default function AppPost({ postID, postUsername, postMediaURL, postTotalC
                                 </div>
                                 <div className="row" style={{ paddingLeft: 10 }}>
                                     <p style={{ fontSize: 11, fontWeight: 500, color: 'gray', }}>
-                                        {postUploadedTimeStamp}
+                                        {postPublishedOn}
                                     </p>
                                 </div>
-
                             </div>
                         </div>
                         {/* Post a comment */}

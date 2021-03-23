@@ -1,0 +1,142 @@
+
+.card-top-info{
+    padding: 10px;
+}
+
+.card-top-name{
+    margin-left: 10px;
+}
+
+.postUserName{
+    color: black;
+    font-weight: 600;
+    font-size: 13.5px;
+}
+
+
+
+
+
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+
+.addComment{
+    border-top: rgba(201, 199, 199, 0.603) 1px solid;    
+}
+
+.addCommentInput{
+    padding: 15px;
+    font-size: 15px;
+    color: grey;
+    border: none;
+    width: 100%;
+    outline: none;
+}
+
+.PostButton{
+    background-color: white;
+    border: none;
+    font-size: 15px;
+    padding: 15px;
+    outline: none;
+    color: rgb(0, 110, 255);
+}
+
+/* App loading animation part - starts here */
+.wrapper {
+  margin: 30px;
+  padding: 30px;
+  background: #fff;
+  width: 360px;
+  height: 640px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper-cell {
+   display: flex;
+   margin-bottom: 30px;
+}
+
+
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}
+
+.animated-background {
+    animation-duration: 1.25s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #F6F6F6;
+    background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
+    background-size: 800px 104px;
+    height: 96px;
+    position: relative;
+}
+
+
+.images {
+  height: 400px;
+  width: auto;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+}
+
+.avatar-small {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+}
+
+.text {
+    margin-left: 5px;
+    height: 15px;
+}
+
+.text-line {
+  height: 10px;
+  width: 230px;
+  background: #F6F6F6;
+  margin: 4px 0;
+}
+
+/* Apploading animation - ends here */
+
+
+@media (max-width:600px){
+    .card-top-info{
+        padding: 5px;
+    }
+    
+    .card-top-name{
+        margin-left: 0px;
+    }
+    
+    .postUserName{
+        color: black;
+        font-weight: 600;
+        font-size: 13.5px;
+    }
+}
+
+
+
