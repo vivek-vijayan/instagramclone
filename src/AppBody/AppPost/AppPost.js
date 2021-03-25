@@ -11,6 +11,7 @@ import Share from './static/share.png'
 import Comment from './static/comment.png'
 import SmileyFace from './static/SmileyFace.png'
 import { useDoubleTap } from 'use-double-tap'
+import moment, { parseTwoDigitYear } from 'moment'
 
 var blankUsernameBackgroundColors = ['purple', 'red', 'green', 'orange']
 var blankUsernameBackgroundColor = blankUsernameBackgroundColors[Math.floor(Math.random() * blankUsernameBackgroundColors.length)];
@@ -24,15 +25,17 @@ const usestyle = makeStyles((theme) => ({
     }
 }));
 
-export default function AppPost({ postID, postUsername, postMediaURL, postTotalComments, postTotalLikes, postPublishedOn }) {
+export default function AppPost({ postID, postUsername, postLikesCount, postMediaURL, postPublishedOn }) {
 
     // Realtime data collection 📮
     const FirebasePostRealTimeData = firebaseInsta.database();
+
+    // likes updator
     let likesCount = FirebasePostRealTimeData.ref(`post/${postID}/likesCount`);
 
     // states collections
     const classes = usestyle();
-    const [likes, setlikes] = useState(0);
+    const [likes, setlikes] = useState(postLikesCount);
     const [ILike, setILike] = useState(false)
     const [AnimeClass, setAnimeClass] = useState("")
     const [HeartPng, setHeartPng] = useState(Heart)
@@ -50,10 +53,12 @@ export default function AppPost({ postID, postUsername, postMediaURL, postTotalC
     });
 
     useEffect(() => {
+        // Like counter 🔄
         likesCount.on('value', snapshot => {
             setlikes(snapshot.val())
             LikesStatusUpdater()
         })
+
     }, [])
 
     function AddLike() {
@@ -77,7 +82,15 @@ export default function AppPost({ postID, postUsername, postMediaURL, postTotalC
         ILike ? DisLike() : AddLike()
     }
 
-    // Likes status initiator 🧡
+    function PostComments(userID, comment) {
+        FirebasePostRealTimeData.ref(`post/${postID}/comments`).child(`${userID}`).set({
+            userID: `${userID}`,
+            comment: `${comment}`,
+            lastUpdated: moment()
+        })
+    }
+
+    // Likes & comments status initiator 🧡
     LikesStatusUpdater()
 
     return (
@@ -168,11 +181,6 @@ export default function AppPost({ postID, postUsername, postMediaURL, postTotalC
                                 </div>
                                 <div className="row" style={{ paddingLeft: 10 }}>
                                     {LikesInformation}
-                                </div>
-                                <div className="row" style={{ paddingLeft: 10 }}>
-                                    <p style={{ fontSize: 12, fontWeight: 500, color: 'gray', marginBottom: 5 }}>
-                                        View all comments
-                                    </p>
                                 </div>
                                 <div className="row" style={{ marginBottom: 20 }}>
                                     <AppPostComments name="vivek"></AppPostComments>
