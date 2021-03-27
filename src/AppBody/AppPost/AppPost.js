@@ -29,19 +29,24 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
 
     // Realtime data collection 📮
     const FirebasePostRealTimeData = firebaseInsta.database();
+    const FirebaseFirestore = firebaseInsta.firestore();
 
     // likes updator
     let likesCount = FirebasePostRealTimeData.ref(`post/${postID}/likesCount`);
+    let comments = FirebaseFirestore.collection('InstagramPost').doc(postID);
 
     // states collections
     const classes = usestyle();
+    const [newComment, setNewComment] = useState("")
     const [likes, setlikes] = useState(postLikesCount);
+    const [commentsList, setcommentsList] = useState([])
     const [ILike, setILike] = useState(false)
     const [AnimeClass, setAnimeClass] = useState("")
     const [HeartPng, setHeartPng] = useState(Heart)
     const [PopUpHeartWhite, setPopUpHeartWhite] = useState("likePostWhiteHide")
 
     var LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>;
+    
     function LikesStatusUpdater() {
         if (likes === 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Like</p>
         else if (likes > 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>
@@ -59,6 +64,9 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
             LikesStatusUpdater()
         })
 
+        comments.collection('commentsSection').onSnapshot((eachComments)=>{
+            setcommentsList(eachComments.docs.map(doc => doc) )
+        })
     }, [])
 
     function AddLike() {
@@ -83,10 +91,12 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
     }
 
     function PostComments(userID, comment) {
-        FirebasePostRealTimeData.ref(`post/${postID}/comments`).child(`${userID}`).set({
-            userID: `${userID}`,
-            comment: `${comment}`,
-            lastUpdated: moment()
+        comments.collection('commentsSection').add({
+            comments: comment,
+            commentedBy: userID,
+            postedOn: "now"
+        }).then((docref) => {
+            alert(`post has been created under the ID - ${docref}`)
         })
     }
 
@@ -183,7 +193,17 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                                     {LikesInformation}
                                 </div>
                                 <div className="row" style={{ marginBottom: 20 }}>
-                                    <AppPostComments name="vivek"></AppPostComments>
+                                    {
+                                        commentsList.map(eachcom => {
+                                            return (
+                                                <AppPostComments commentedBy = {eachcom.data().commentedBy}
+                                                    comment = {eachcom.data().comments}
+                                                    postedOn = {eachcom.data().postedOn}
+                                                ></AppPostComments>
+                                            )
+                                        })
+                                    }
+                                    
                                 </div>
                                 <div className="row" style={{ paddingLeft: 10 }}>
                                     <p style={{ fontSize: 11, fontWeight: 500, color: 'gray', }}>
@@ -198,10 +218,14 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                                 <img src={SmileyFace} alt="smileyFace" width="40px" style={{ paddingTop: "10px" }}></img>
                             </div>
                             <div className="col-9" >
-                                <input className="addCommentInput" placeholder="Add a comment..."></input>
+                                <input className="addCommentInput" onChange={(e) => {
+                                    setNewComment(e.target.value)
+                                }} placeholder="Add a comment..."></input>
                             </div>
                             <div className="col-2">
-                                <button className="PostButton">
+                                <button className="PostButton" onClick={() => {
+                                    PostComments('vivek', newComment)
+                                }}>
                                     Post
                                 </button>
                             </div>

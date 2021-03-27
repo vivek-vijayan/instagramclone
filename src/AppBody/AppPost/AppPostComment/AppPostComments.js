@@ -6,13 +6,11 @@ import Heart from '../static/like.png'
 import { useDoubleTap } from 'use-double-tap'
 import { useState } from 'react';
 
-export default function AppPostComments(props) {
-    //var username = props.username;
-    //var comments = props.comments;
-    //var like = props.like;
 
-    var username = "rocket raja 🚀"
-    var comment = " Picture looks great"
+export default function AppPostComments(props) {
+    var commentedBy = props.commentedBy;
+    var comment = props.comment;
+    var postedOn = props.postedOn;
 
     const [likes, setlikes] = useState(0);
     const [ILike, setILike] = useState(false)
@@ -44,18 +42,17 @@ export default function AppPostComments(props) {
         <div {...bind}>
             <div className="comments" style={{ fontSize: 14 }}>
                 <div className="row" style={{ paddingLeft: 10 }}>
-                    <div className="col-sm-11">
-                        <span style={{ fontWeight: 700, paddingRight: 10 }}>{username}</span>
+                    <div className="col-11">
+                        <span style={{ fontWeight: 700, paddingRight: 10 }}>{commentedBy}</span>
                         <span>{comment}</span>
-                        <span style={{ fontSize: 10, color: 'gray', paddingLeft: 10, fontWeight: 500 }}>20 min ago</span>
+                        
                     </div>
-                    <div className="col-sm-1" style={{ position: 'absolute', right: 10 }}>
+                    <div className="col-1" style={{ position: 'absolute', right: 10 }}>
                         <img src={HeartPng} style={{ marginLeft: 10, }} className={AnimeClass} alt="whiteheart" width="15px" />
                     </div>
-                    <div style={{ paddingLeft: 20 }}>
+                    {/* <div style={{ paddingLeft: 20 }}>
                         inner reply. need to practice more on this keyboard                        
-                    </div>
-                    
+                    </div> */}
                 </div>
             </div>
         </div>
