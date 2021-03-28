@@ -35,6 +35,8 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
     let likesCount = FirebasePostRealTimeData.ref(`post/${postID}/likesCount`);
     let comments = FirebaseFirestore.collection('InstagramPost').doc(postID);
 
+    // Input data holder
+    var placeholderValue = "";
     // states collections
     const classes = usestyle();
     const [newComment, setNewComment] = useState("")
@@ -46,7 +48,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
     const [PopUpHeartWhite, setPopUpHeartWhite] = useState("likePostWhiteHide")
 
     var LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>;
-    
+
     function LikesStatusUpdater() {
         if (likes === 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Like</p>
         else if (likes > 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>
@@ -64,7 +66,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
             LikesStatusUpdater()
         })
 
-        comments.collection('commentsSection').onSnapshot((eachComments)=>{
+        comments.collection('commentsSection').onSnapshot((eachComments) => {
             setcommentsList(eachComments.docs.map(doc => doc))
         })
     }, [])
@@ -96,7 +98,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
             comments: comment,
             commentedBy: userID,
             postedOn: d.toDateString(),
-            totalLikes : 0
+            totalLikes: 0
         }).then((docref) => {
             console.log(`new comment added with the ID - ${docref.id}`)
         })
@@ -194,15 +196,15 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                                 <div className="row" style={{ paddingLeft: 10 }}>
                                     {LikesInformation}
                                 </div>
-                                <div style={{ marginBottom: 20}}>
+                                <div style={{ marginBottom: 20 }}>
                                     {
                                         commentsList.map(eachcom => {
                                             return (
-                                                <AppPostComments commentID = {eachcom.id} commentedBy = {eachcom.data().commentedBy}
-                                                    comment = {eachcom.data().comments}
-                                                    postedOn = {eachcom.data().postedOn}
-                                                    postID = {postID}
-                                                    commentLikeCount = {eachcom.data().totalLikes}
+                                                <AppPostComments commentID={eachcom.id} commentedBy={eachcom.data().commentedBy}
+                                                    comment={eachcom.data().comments}
+                                                    postedOn={eachcom.data().postedOn}
+                                                    postID={postID}
+                                                    commentLikeCount={eachcom.data().totalLikes}
                                                 ></AppPostComments>
                                             )
                                         })
@@ -216,23 +218,26 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                             </div>
                         </div>
                         {/* Post a comment */}
-                        <div className="row addComment">
-                            <div className="col-1">
-                                <img src={SmileyFace} alt="smileyFace" width="40px" style={{ paddingTop: "10px" }}></img>
-                            </div>
-                            <div className="col-9" >
-                                <input className="addCommentInput" onChange={(e) => {
-                                    setNewComment(e.target.value)
-                                }} placeholder="Add a comment..."></input>
-                            </div>
-                            <div className="col-2">
-                                <button className="PostButton" onClick={() => {
-                                    PostComments('Vivek Vijayan 🔥', newComment)
-                                }}>
-                                    Post
+                        <form>
+                            <div className="row addComment">
+                                <div className="col-1">
+                                    <img src={SmileyFace} alt="smileyFace" width="40px" style={{ paddingTop: "10px" }}></img>
+                                </div>
+                                <div className="col-9" >
+                                    <input className="addCommentInput" onChange={(e) => {
+                                        setNewComment(e.target.value)
+                                    }} placeholder="Add a comment..."></input>
+                                </div>
+                                <div className="col-2">
+                                    <button type="reset" className="PostButton" onClick={() => {
+                                        PostComments('Vivek Vijayan 🔥', newComment)
+                                        placeholderValue = ""
+                                    }}>
+                                        Post
                                 </button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
