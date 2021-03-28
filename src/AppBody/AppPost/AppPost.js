@@ -65,7 +65,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         })
 
         comments.collection('commentsSection').onSnapshot((eachComments)=>{
-            setcommentsList(eachComments.docs.map(doc => doc) )
+            setcommentsList(eachComments.docs.map(doc => doc))
         })
     }, [])
 
@@ -91,12 +91,14 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
     }
 
     function PostComments(userID, comment) {
+        var d = new Date()
         comments.collection('commentsSection').add({
             comments: comment,
             commentedBy: userID,
-            postedOn: "now"
+            postedOn: d.toDateString(),
+            totalLikes : 0
         }).then((docref) => {
-            alert(`post has been created under the ID - ${docref}`)
+            console.log(`new comment added with the ID - ${docref.id}`)
         })
     }
 
@@ -192,18 +194,19 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                                 <div className="row" style={{ paddingLeft: 10 }}>
                                     {LikesInformation}
                                 </div>
-                                <div className="row" style={{ marginBottom: 20 }}>
+                                <div style={{ marginBottom: 20}}>
                                     {
                                         commentsList.map(eachcom => {
                                             return (
-                                                <AppPostComments commentedBy = {eachcom.data().commentedBy}
+                                                <AppPostComments commentID = {eachcom.id} commentedBy = {eachcom.data().commentedBy}
                                                     comment = {eachcom.data().comments}
                                                     postedOn = {eachcom.data().postedOn}
+                                                    postID = {postID}
+                                                    commentLikeCount = {eachcom.data().totalLikes}
                                                 ></AppPostComments>
                                             )
                                         })
                                     }
-                                    
                                 </div>
                                 <div className="row" style={{ paddingLeft: 10 }}>
                                     <p style={{ fontSize: 11, fontWeight: 500, color: 'gray', }}>
@@ -224,7 +227,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                             </div>
                             <div className="col-2">
                                 <button className="PostButton" onClick={() => {
-                                    PostComments('vivek', newComment)
+                                    PostComments('Vivek Vijayan 🔥', newComment)
                                 }}>
                                     Post
                                 </button>
