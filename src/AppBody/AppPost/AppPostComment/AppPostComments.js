@@ -30,7 +30,7 @@ export default function AppPostComments(props) {
         FirebaseCommentSection.onSnapshot((snapshotCommentsLikes) => {
             setlikes(snapshotCommentsLikes.data().totalLikes)
         })
-    }, [])
+    })
 
     function AddLike() {
         setILike(true)
@@ -60,7 +60,7 @@ export default function AppPostComments(props) {
                 <span style={{ color: 'grey', fontSize: 10, paddingLeft: 10 }}>{likes} Like</span>
             </div>
             <div className="col-sm-1">
-                <img style={{ position: 'related', right: 0 }} src={HeartPng} style={{ marginLeft: 10, }} className={AnimeClass} alt="whiteheart" width="15px" />
+                <img style={{ position: 'related', right: 0, marginLeft: 10, }} src={HeartPng} className={AnimeClass} alt="whiteheart" width="15px" />
             </div>
         </div>
     )

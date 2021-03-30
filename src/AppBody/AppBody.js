@@ -7,7 +7,6 @@ import './AppBodyStyle.css'
 import {firebaseInsta} from '../FirebaseCenter/FirebaseInstagram.js'
 // Firebase connectvity
 const firebaseDB = firebaseInsta.firestore();
-const userProfileID = "post"
 
 export default function AppBody() {
     const [instagramPost, setInstagramPost] = useState([])
