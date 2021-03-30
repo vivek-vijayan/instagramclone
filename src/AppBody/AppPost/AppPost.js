@@ -11,7 +11,6 @@ import Share from './static/share.png'
 import Comment from './static/comment.png'
 import SmileyFace from './static/SmileyFace.png'
 import { useDoubleTap } from 'use-double-tap'
-import moment, { parseTwoDigitYear } from 'moment'
 
 var blankUsernameBackgroundColors = ['purple', 'red', 'green', 'orange']
 var blankUsernameBackgroundColor = blankUsernameBackgroundColors[Math.floor(Math.random() * blankUsernameBackgroundColors.length)];
@@ -35,8 +34,6 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
     let likesCount = FirebasePostRealTimeData.ref(`post/${postID}/likesCount`);
     let comments = FirebaseFirestore.collection('InstagramPost').doc(postID);
 
-    // Input data holder
-    var placeholderValue = "";
     // states collections
     const classes = usestyle();
     const [newComment, setNewComment] = useState("")
@@ -69,7 +66,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         comments.collection('commentsSection').onSnapshot((eachComments) => {
             setcommentsList(eachComments.docs.map(doc => doc))
         })
-    }, [])
+    })
 
     function AddLike() {
         setILike(true)
@@ -231,7 +228,6 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                                 <div className="col-2">
                                     <button type="reset" className="PostButton" onClick={() => {
                                         PostComments('Vivek Vijayan 🔥', newComment)
-                                        placeholderValue = ""
                                     }}>
                                         Post
                                 </button>
