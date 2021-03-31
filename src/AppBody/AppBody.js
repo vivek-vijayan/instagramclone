@@ -4,13 +4,13 @@ import AppPostLoading from './AppPost/AppPostLoading/AppPostLoading'
 import AppSideBar from "./AppSideBar/AppSideBar";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './AppBodyStyle.css'
-import {firebaseInsta} from '../FirebaseCenter/FirebaseInstagram.js'
+import firebaseInsta from 'firebase'
 // Firebase connectvity
 const firebaseDB = firebaseInsta.firestore();
 
-export default function AppBody() {
+export default function AppBody(props) {
     const [instagramPost, setInstagramPost] = useState([])
-
+    const [username, setUsername] = useState(props.username)
     // getting the post information from the server 🚀
     useEffect(() => {
         firebaseDB.collection('InstagramPost').onSnapshot(snapshot => {
@@ -38,7 +38,7 @@ export default function AppBody() {
                             <AppPostLoading></AppPostLoading>
                     </div>
                     <div className="col-sm-4">
-                        <AppSideBar></AppSideBar>
+                        <AppSideBar username = {username}></AppSideBar>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Avatar, makeStyles } from '@material-ui/core'
 import './AppHeaderStyle.css'
@@ -7,6 +7,9 @@ import HomeLogo from './static/homeLogo.png'
 import HeartLogo from './static/heartLogo.png'
 import SearchLogo from './static/searchLogo.png'
 import ProfileLogo from './static/profileLogo.png'
+import { useState } from 'react';
+
+
 
 const useStyle = makeStyles((theme) => ({
     small: {
@@ -17,8 +20,21 @@ const useStyle = makeStyles((theme) => ({
     }
 }))
 
-export default function AppHeader() {
+export default function AppHeader(props) {
     const avatarStyle = useStyle()
+    const [user, setUser] = useState(props.userProfileName);
+
+
+    // 🔥 Firebase Google Authentication
+    
+
+    const callGoogleLogout = () => {
+        props.logout()
+    }
+    useEffect(() => {
+        setUser(props.userProfileName)
+    }, [])
+
     return (
         <div>
             <div className="container-fluid app-header positionFixed">
@@ -47,11 +63,12 @@ export default function AppHeader() {
                                     <div className="col-sm-2 text-center"><img src={HeartLogo} alt="heart"
                                         width="30px" /></div>
                                     <div className="col-sm-2">
-                                        <Avatar alt='Vivek Vijayan'
+                                        <Avatar alt={user}
                                             className={
                                                 avatarStyle.small
                                             }
                                             src="http://logo"
+                                            onClick={callGoogleLogout}
                                         />
                                     </div>
                                 </div>
@@ -82,7 +99,5 @@ export default function AppHeader() {
                 </div>
             </div>
         </div>
-
-
     )
 }

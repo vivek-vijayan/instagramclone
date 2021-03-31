@@ -2,6 +2,7 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Avatar, makeStyles} from '@material-ui/core'
 import './AppSideBarStyle.css'
+import { useState } from 'react'
 
 const useStyle = makeStyles((theme) => ({
     big: {
@@ -12,8 +13,9 @@ const useStyle = makeStyles((theme) => ({
     }
 }))
 
-export default function AppSideBar() {
+export default function AppSideBar(props) {
     const classes = useStyle()
+    const [username, setUsername] = useState(props.username)
     return (
         <div style={{position:'fixed'}}>
             <div className="container-fluid"
@@ -50,7 +52,7 @@ export default function AppSideBar() {
                                         <div className="col-sm-12">
                                             <p style={
                                                 {fontSize: 14}
-                                            }>Vivek Vijayan</p>
+                                            }>{username}</p>
                                         </div>
                                     </div>
                                 </div>
