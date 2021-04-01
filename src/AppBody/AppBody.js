@@ -4,7 +4,9 @@ import AppPostLoading from './AppPost/AppPostLoading/AppPostLoading'
 import AppSideBar from "./AppSideBar/AppSideBar";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './AppBodyStyle.css'
-import {firebaseInsta} from '../FirebaseCenter/FirebaseInstagram.js'
+import firebaseInsta from 'firebase'
+
+
 // Firebase connectvity
 const firebaseDB = firebaseInsta.firestore();
 

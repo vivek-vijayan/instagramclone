@@ -66,7 +66,6 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         comments.collection('commentsSection').onSnapshot((eachComments) => {
             setcommentsList(eachComments.docs.map(doc => doc))
         })
-
     })
 
     function AddLike() {
