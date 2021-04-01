@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Avatar, makeStyles } from '@material-ui/core'
 import './AppHeaderStyle.css'
@@ -7,9 +7,6 @@ import HomeLogo from './static/homeLogo.png'
 import HeartLogo from './static/heartLogo.png'
 import SearchLogo from './static/searchLogo.png'
 import ProfileLogo from './static/profileLogo.png'
-import { useState } from 'react';
-
-
 
 const useStyle = makeStyles((theme) => ({
     small: {
@@ -20,7 +17,7 @@ const useStyle = makeStyles((theme) => ({
     }
 }))
 
-export default function AppHeader(props) {
+export default function AppHeader() {
     const avatarStyle = useStyle()
     const [username, setusername] = useState(props.username);
     const [userPhotoURL, setUserPhotoURL] = useState(props.activeUserPhotoURL)
@@ -31,7 +28,7 @@ export default function AppHeader(props) {
     useEffect(() => {
         setusername(props.username)
         setUserPhotoURL(props.activeUserPhotoURL)
-    }, [])
+    }, []);
 
     return (
         <div>
@@ -61,12 +58,11 @@ export default function AppHeader(props) {
                                     <div className="col-sm-2 text-center"><img src={HeartLogo} alt="heart"
                                         width="30px" /></div>
                                     <div className="col-sm-2">
-                                        <Avatar alt={username}
+                                        <Avatar alt='Vivek Vijayan'
                                             className={
                                                 avatarStyle.small
                                             }
-                                            src={userPhotoURL}
-                                            onClick={callGoogleLogout}
+                                            src="http://logo"
                                         />
                                     </div>
                                 </div>
@@ -97,5 +93,7 @@ export default function AppHeader(props) {
                 </div>
             </div>
         </div>
+
+
     )
 }
