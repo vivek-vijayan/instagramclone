@@ -8,6 +8,7 @@ import HeartLogo from './static/heartLogo.png'
 import SearchLogo from './static/searchLogo.png'
 import ProfileLogo from './static/profileLogo.png'
 
+
 const useStyle = makeStyles((theme) => ({
     small: {
         width: theme.spacing(3),
@@ -19,16 +20,7 @@ const useStyle = makeStyles((theme) => ({
 
 export default function AppHeader() {
     const avatarStyle = useStyle()
-    const [username, setusername] = useState(props.username);
-    const [userPhotoURL, setUserPhotoURL] = useState(props.activeUserPhotoURL)
-
-    const callGoogleLogout = () => {
-        props.logout()
-    }
-    useEffect(() => {
-        setusername(props.username)
-        setUserPhotoURL(props.activeUserPhotoURL)
-    }, []);
+ 
 
     return (
         <div>

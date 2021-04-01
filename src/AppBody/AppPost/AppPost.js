@@ -90,14 +90,13 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         ILike ? DisLike() : AddLike()
     }
 
-    function PostComments(userID, token, comment) {
+    function PostComments(userID, comment) {
         var d = new Date()
         comments.collection('commentsSection').add({
             comments: comment,
             commentedBy: userID,
             postedOn: d.toDateString(),
             totalLikes: 0,
-            postedBy: token
         }).then((docref) => {
             console.log(`new comment added with the ID - ${docref.id}`)
         })
@@ -230,7 +229,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                                 </div>
                                 <div className="col-2">
                                     <button type="reset" className="PostButton" onClick={() => {
-                                        PostComments(username, newComment)
+                                        PostComments("username", newComment)
                                     }}>
                                         Post
                                 </button>

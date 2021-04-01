@@ -32,8 +32,8 @@ export default function AppSideBar() {
                                 <Avatar className={
                                         classes.big
                                     }
-                                    alt={username}
-                                    src={activeUserPhotoURL}></Avatar>
+                                    alt="vivek"
+                                    src="//"></Avatar>
                             </div>
 
                             <div className="col-sm-8">
