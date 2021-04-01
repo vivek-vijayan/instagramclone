@@ -10,7 +10,8 @@ const firebaseDB = firebaseInsta.firestore();
 
 export default function AppBody(props) {
     const [instagramPost, setInstagramPost] = useState([])
-    const [username, setUsername] = useState(props.username)
+    const [username, setUsername] = useState(props.activeUsername)
+    const [activeUserPhotoURL, setactiveUserPhotoURL] = useState(props.activeUserPhotoURL)
     // getting the post information from the server 🚀
     useEffect(() => {
         firebaseDB.collection('InstagramPost').onSnapshot(snapshot => {
@@ -31,7 +32,7 @@ export default function AppBody(props) {
                                             postMediaURL={item.data().postMediaURL}
                                             postLikesCount = {item.data().postLikesCount}
                                             postPublishedOn={item.data().postPublishedOn}
-                                            activeUsername={props.username}
+                                            activeUsername = {username}
                                             />
                                     </div>
                                 )
@@ -39,7 +40,7 @@ export default function AppBody(props) {
                             <AppPostLoading></AppPostLoading>
                     </div>
                     <div className="col-sm-4">
-                        <AppSideBar username = {username}></AppSideBar>
+                        <AppSideBar username={username} activeUserPhotoURL={activeUserPhotoURL}></AppSideBar>
                     </div>
                 </div>
             </div>

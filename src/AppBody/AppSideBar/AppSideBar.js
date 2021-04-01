@@ -16,6 +16,7 @@ const useStyle = makeStyles((theme) => ({
 export default function AppSideBar(props) {
     const classes = useStyle()
     const [username, setUsername] = useState(props.username)
+    const [activeUserPhotoURL, setactiveUserPhotoURL] = useState(props.activeUserPhotoURL)
     return (
         <div style={{position:'fixed'}}>
             <div className="container-fluid"
@@ -34,8 +35,8 @@ export default function AppSideBar(props) {
                                 <Avatar className={
                                         classes.big
                                     }
-                                    alt="Vivek Vijayan"
-                                    src="//"></Avatar>
+                                    alt={username}
+                                    src={activeUserPhotoURL}></Avatar>
                             </div>
 
                             <div className="col-sm-8">

@@ -22,17 +22,15 @@ const useStyle = makeStyles((theme) => ({
 
 export default function AppHeader(props) {
     const avatarStyle = useStyle()
-    const [user, setUser] = useState(props.userProfileName);
-
-
-    // 🔥 Firebase Google Authentication
-    
+    const [username, setusername] = useState(props.username);
+    const [userPhotoURL, setUserPhotoURL] = useState(props.activeUserPhotoURL)
 
     const callGoogleLogout = () => {
         props.logout()
     }
     useEffect(() => {
-        setUser(props.userProfileName)
+        setusername(props.username)
+        setUserPhotoURL(props.activeUserPhotoURL)
     }, [])
 
     return (
@@ -63,11 +61,11 @@ export default function AppHeader(props) {
                                     <div className="col-sm-2 text-center"><img src={HeartLogo} alt="heart"
                                         width="30px" /></div>
                                     <div className="col-sm-2">
-                                        <Avatar alt={user}
+                                        <Avatar alt={username}
                                             className={
                                                 avatarStyle.small
                                             }
-                                            src="http://logo"
+                                            src={userPhotoURL}
                                             onClick={callGoogleLogout}
                                         />
                                     </div>

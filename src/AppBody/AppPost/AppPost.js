@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './AppPostStyle.css'
 import { Avatar, makeStyles } from '@material-ui/core'
 import AppPostComments from './AppPostComment/AppPostComments'
-import { firebaseInsta } from '../../FirebaseCenter/FirebaseInstagram.js'
-
+import firebaseInsta from 'firebase'
 import Heart from './static/like.png'
 import WhiteHeart from './static/whiteheart.png'
 import HeartRed from './static/like_red.png'
@@ -67,6 +66,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         comments.collection('commentsSection').onSnapshot((eachComments) => {
             setcommentsList(eachComments.docs.map(doc => doc))
         })
+
     })
 
     function AddLike() {
@@ -90,13 +90,14 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         ILike ? DisLike() : AddLike()
     }
 
-    function PostComments(userID, comment) {
+    function PostComments(userID, token, comment) {
         var d = new Date()
         comments.collection('commentsSection').add({
             comments: comment,
             commentedBy: userID,
             postedOn: d.toDateString(),
-            totalLikes: 0
+            totalLikes: 0,
+            postedBy: token
         }).then((docref) => {
             console.log(`new comment added with the ID - ${docref.id}`)
         })
@@ -202,6 +203,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                                                     comment={eachcom.data().comments}
                                                     postedOn={eachcom.data().postedOn}
                                                     postID={postID}
+                                                    
                                                     commentLikeCount={eachcom.data().totalLikes}
                                                 ></AppPostComments>
                                             )

@@ -7,16 +7,17 @@ import { useState } from 'react';
 
 function App() {
 
-  const [userProfileName, setuserProfileName] = useState();
   const [userActivated, setUserActivated] = useState(false);
+  const [activeUsername, setactiveUsername] = useState();
+  const [activeUserPhotoURL, setactiveUserPhotoURL] = useState()
 
   const loginUsingGoogleAuthentication = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then((userLogin) => {
-      setuserProfileName(userLogin.user.displayName)
       setUserActivated(true);
+      setactiveUsername(userLogin.user.displayName);
+      setactiveUserPhotoURL(userLogin.user.photoURL);
     })
-
   }
   const logout = () => {
     firebase.auth().signOut().then(() => {
@@ -28,8 +29,8 @@ function App() {
   var postScreen;
   if (userActivated === true) {
     postScreen = <div>
-      <AppHeader logout={logout} userActivated={userActivated} userProfileName={userProfileName} ></AppHeader>
-      <AppBody username = {userProfileName} ></AppBody>
+      <AppHeader logout={logout} userActivated={userActivated} activeUsername={activeUsername} activeUserPhotoURL={activeUserPhotoURL} ></AppHeader>
+      <AppBody activeUsername={activeUsername} activeUserPhotoURL={activeUserPhotoURL}></AppBody>
     </div>
   }
   else {
