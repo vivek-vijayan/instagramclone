@@ -4,7 +4,7 @@ import HeartRed from '../static/like_red.png'
 import Heart from '../static/like.png'
 import { useDoubleTap } from 'use-double-tap'
 import { useState } from 'react';
-import firebaseInsta from 'firebase'
+import { firebaseInsta } from '../../../FirebaseCenter/FirebaseInstagram.js'
 
 
 export default function AppPostComments(props) {
