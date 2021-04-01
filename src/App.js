@@ -3,9 +3,10 @@ import AppBody from './AppBody/AppBody';
 import AppHeader from './AppHeader/AppHeader'
 import firebase from 'firebase'
 import { useState } from 'react';
-import { useEffect } from 'react';
+
 
 function App() {
+
   const [userProfileName, setuserProfileName] = useState();
   const [userActivated, setUserActivated] = useState(false);
 

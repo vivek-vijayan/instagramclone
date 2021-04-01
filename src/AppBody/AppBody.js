@@ -31,6 +31,7 @@ export default function AppBody(props) {
                                             postMediaURL={item.data().postMediaURL}
                                             postLikesCount = {item.data().postLikesCount}
                                             postPublishedOn={item.data().postPublishedOn}
+                                            activeUsername={props.username}
                                             />
                                     </div>
                                 )

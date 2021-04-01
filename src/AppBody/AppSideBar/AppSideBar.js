@@ -57,7 +57,7 @@ export default function AppSideBar(props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-sm-2 link"  >
+                            <div className="col-sm-2 link">
                                 Logout
                             </div>
                         </div>

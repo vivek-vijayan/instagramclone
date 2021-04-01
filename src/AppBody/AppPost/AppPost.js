@@ -24,7 +24,7 @@ const usestyle = makeStyles((theme) => ({
     }
 }));
 
-export default function AppPost({ postID, postUsername, postLikesCount, postMediaURL, postPublishedOn }) {
+export default function AppPost({ postID, postUsername, postLikesCount, postMediaURL, postPublishedOn, activeUsername }) {
 
     // Realtime data collection 📮
     const FirebasePostRealTimeData = firebaseInsta.database();
@@ -37,6 +37,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
     // states collections
     const classes = usestyle();
     const [newComment, setNewComment] = useState("")
+    const [username, setusername] = useState(activeUsername)
     const [likes, setlikes] = useState(postLikesCount);
     const [commentsList, setcommentsList] = useState([])
     const [ILike, setILike] = useState(false)
@@ -227,7 +228,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                                 </div>
                                 <div className="col-2">
                                     <button type="reset" className="PostButton" onClick={() => {
-                                        PostComments('Vivek Vijayan 🔥', newComment)
+                                        PostComments(username, newComment)
                                     }}>
                                         Post
                                 </button>
