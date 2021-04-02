@@ -23,7 +23,14 @@ const usestyle = makeStyles((theme) => ({
     }
 }));
 
-export default function AppPost({ postID, postUsername, postLikesCount, postMediaURL, postPublishedOn, activeUsername, activeUserProfilePicture, activeUserEmailID }) {
+export default function AppPost({ postID,
+    postUsername,
+    postLikesCount,
+    postMediaURL,
+    postPublishedOn,
+    activeUsername,
+    activeUserProfilePicture,
+    activeUserEmailID }) {
 
     // Realtime data collection 📮
     const FirebasePostRealTimeData = firebaseInsta.database();
@@ -33,15 +40,29 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
     let likesCount = FirebasePostRealTimeData.ref(`post/${postID}/likesCount`);
     let comments = FirebaseFirestore.collection('InstagramPost').doc(postID);
 
+    var ILikePost = false
+    var IHeartPost = Heart
+    useEffect(() => {
+        const LikesSnapshot = FirebaseFirestore.collection(`InstagramPost`).doc(postID).collection(`usersLiked`).where('email', '==', activeUserEmailID).get();
+        if (LikesSnapshot.empty) {
+            ILikePost = false
+            IHeartPost = Heart
+        }
+        else {
+            ILikePost = true
+            IHeartPost = HeartRed
+        }
+    }, [])
+    
     // states collections
     const classes = usestyle();
     const [newComment, setNewComment] = useState("")
     const [username, setusername] = useState(activeUsername)
     const [likes, setlikes] = useState(postLikesCount);
     const [commentsList, setcommentsList] = useState([])
-    const [ILike, setILike] = useState(false)
+    const [ILike, setILike] = useState(ILikePost)
     const [AnimeClass, setAnimeClass] = useState("")
-    const [HeartPng, setHeartPng] = useState(Heart)
+    const [HeartPng, setHeartPng] = useState(IHeartPost)
     const [PopUpHeartWhite, setPopUpHeartWhite] = useState("likePostWhiteHide")
 
     var LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>;
@@ -51,6 +72,8 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         else if (likes > 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>
         else LikesInformation = ""
     }
+
+
 
     const bind = useDoubleTap((event) => {
         LikeActionHandler()
@@ -66,6 +89,8 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         comments.collection('commentsSection').onSnapshot((eachComments) => {
             setcommentsList(eachComments.docs.map(doc => doc))
         })
+
+
     })
 
     function AddLike() {
@@ -75,7 +100,11 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         setPopUpHeartWhite("likePostWhite")
         LikesStatusUpdater()
         FirebasePostRealTimeData.ref(`post/${postID}`).child('likesCount').set(likes + 1)
-        
+        FirebaseFirestore.collection('InstagramPost').doc(postID).collection('usersLiked').add({
+            liked: true,
+            email: activeUserEmailID
+        })
+
     }
     function DisLike() {
         setILike(false)
@@ -95,7 +124,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         comments.collection('commentsSection').add({
             comments: comment,
             commentedBy: userID,
-            commenterEmailID : emailID,
+            commenterEmailID: emailID,
             postedOn: d.toDateString(),
             totalLikes: 0,
         }).then((docref) => {
@@ -219,7 +248,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                         {/* Post a comment */}
                         <form>
                             <div className="row addComment">
-                                <div className="col-sm-1" style={{alignSelf: 'center', paddingLeft: 25}}>
+                                <div className="col-sm-1" style={{ alignSelf: 'center', paddingLeft: 25 }}>
                                     <Avatar src={activeUserProfilePicture} alt={activeUsername}
                                         className={
                                             classes.medium

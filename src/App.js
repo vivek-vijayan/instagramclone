@@ -11,6 +11,9 @@ function App() {
   const [activeUserEmailID, setactiveUserEmailID] = useState();
   const [isUserActive, setIsUserActive] = useState(false);
 
+  // Page controller
+  const [pageController, setPageController] = useState("login")
+  const [returnPage, setReturnPage] = useState()
   // Google provider creation
   var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -20,6 +23,7 @@ function App() {
       setActiveUserProfilePictureURL(userprofile.user.photoURL)
       setactiveUserEmailID(userprofile.user.email)
       setIsUserActive(true);
+      setPageController("post")
     })
   }
 
@@ -29,16 +33,18 @@ function App() {
 
   const logout = () => {
     firebase.auth().signOut().then(() => {
-        setactiveUserEmailID("")
-        setActiveUserProfilePictureURL("")
-        setActiveUserName("")
-        setIsUserActive(false);
+      setactiveUserEmailID("")
+      setActiveUserProfilePictureURL("")
+      setActiveUserName("")
+      setIsUserActive(false);
+      setPageController("login")
     })
   }
+
   return (
     <div>
-      <AppHeader username = {activeUserName} profilepicture = {activeUserProfilePictureURL} logout = {logout} login = {login} isUser = {isUserActive} ></AppHeader>
-      <AppBody username={activeUserName} profilepicture={activeUserProfilePictureURL} emailID={activeUserEmailID} logout={logout}></AppBody>
+      <AppHeader username={activeUserName} profilepicture={activeUserProfilePictureURL} logout={logout} login={login} isUser={isUserActive} ></AppHeader>
+      <AppBody showPage={pageController} username={activeUserName} profilepicture={activeUserProfilePictureURL} emailID={activeUserEmailID} logout={logout}></AppBody>
     </div>
   );
 }
