@@ -23,7 +23,7 @@ const usestyle = makeStyles((theme) => ({
     }
 }));
 
-export default function AppPost({ postID, postUsername, postLikesCount, postMediaURL, postPublishedOn, activeUsername, activeUserProfilePicture }) {
+export default function AppPost({ postID, postUsername, postLikesCount, postMediaURL, postPublishedOn, activeUsername, activeUserProfilePicture, activeUserEmailID }) {
 
     // Realtime data collection 📮
     const FirebasePostRealTimeData = firebaseInsta.database();
@@ -75,6 +75,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         setPopUpHeartWhite("likePostWhite")
         LikesStatusUpdater()
         FirebasePostRealTimeData.ref(`post/${postID}`).child('likesCount').set(likes + 1)
+        
     }
     function DisLike() {
         setILike(false)
@@ -89,11 +90,12 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
         ILike ? DisLike() : AddLike()
     }
 
-    function PostComments(userID, comment) {
+    function PostComments(userID, comment, emailID) {
         var d = new Date()
         comments.collection('commentsSection').add({
             comments: comment,
             commentedBy: userID,
+            commenterEmailID : emailID,
             postedOn: d.toDateString(),
             totalLikes: 0,
         }).then((docref) => {
@@ -230,7 +232,7 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                                 </div>
                                 <div className="col-sm-2">
                                     <button type="reset" className="PostButton" onClick={() => {
-                                        PostComments(activeUsername, newComment)
+                                        PostComments(activeUsername, newComment, activeUserEmailID)
                                     }}>
                                         Post
                                 </button>

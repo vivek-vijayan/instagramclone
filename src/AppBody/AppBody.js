@@ -14,6 +14,7 @@ export default function AppBody(props) {
     const username = props.username;
     const profilepicture = props.profilepicture;
     const logout = props.logout.bind();
+    const emailID = props.emailID;
 
     const [instagramPost, setInstagramPost] = useState([])
     // getting the post information from the server 🚀
@@ -38,6 +39,7 @@ export default function AppBody(props) {
                                             postPublishedOn={item.data().postPublishedOn}
                                             activeUsername = {username}
                                             activeUserProfilePicture = {profilepicture}
+                                            activeUserEmailID = {emailID}
                                             />
                                     </div>
                                 )
