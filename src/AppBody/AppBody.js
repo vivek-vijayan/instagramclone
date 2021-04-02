@@ -9,7 +9,11 @@ import {firebaseInsta} from '../FirebaseCenter/FirebaseInstagram.js'
 // Firebase connectvity
 const firebaseDB = firebaseInsta.firestore();
 
-export default function AppBody() {
+export default function AppBody(props) {
+    // getting the props
+    const username = props.username;
+    const profilepicture = props.profilepicture;
+
     const [instagramPost, setInstagramPost] = useState([])
     // getting the post information from the server 🚀
     useEffect(() => {
@@ -31,7 +35,7 @@ export default function AppBody() {
                                             postMediaURL={item.data().postMediaURL}
                                             postLikesCount = {item.data().postLikesCount}
                                             postPublishedOn={item.data().postPublishedOn}
-                                            
+                                            activeUsername = {username}
                                             />
                                     </div>
                                 )

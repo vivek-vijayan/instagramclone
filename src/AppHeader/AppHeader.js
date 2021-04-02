@@ -7,6 +7,9 @@ import HomeLogo from './static/homeLogo.png'
 import HeartLogo from './static/heartLogo.png'
 import SearchLogo from './static/searchLogo.png'
 import ProfileLogo from './static/profileLogo.png'
+import firebase from 'firebase'
+
+
 
 
 const useStyle = makeStyles((theme) => ({
@@ -18,9 +21,13 @@ const useStyle = makeStyles((theme) => ({
     }
 }))
 
-export default function AppHeader() {
-    const avatarStyle = useStyle()
- 
+export default function AppHeader(props) {
+    const avatarStyle = useStyle();
+
+    // getting the props 🔥
+    const username = props.username;
+    const profilepicture = props.profilepicture;
+    const logout = props.logout.bind();
 
     return (
         <div>
@@ -55,6 +62,7 @@ export default function AppHeader() {
                                                 avatarStyle.small
                                             }
                                             src="http://logo"
+                                            onClick = {logout}
                                         />
                                     </div>
                                 </div>

@@ -24,7 +24,7 @@ const usestyle = makeStyles((theme) => ({
 }));
 
 export default function AppPost({ postID, postUsername, postLikesCount, postMediaURL, postPublishedOn, activeUsername }) {
-
+    
     // Realtime data collection 📮
     const FirebasePostRealTimeData = firebaseInsta.database();
     const FirebaseFirestore = firebaseInsta.firestore();
