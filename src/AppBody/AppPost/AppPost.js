@@ -23,8 +23,8 @@ const usestyle = makeStyles((theme) => ({
     }
 }));
 
-export default function AppPost({ postID, postUsername, postLikesCount, postMediaURL, postPublishedOn, activeUsername }) {
-    
+export default function AppPost({ postID, postUsername, postLikesCount, postMediaURL, postPublishedOn, activeUsername, activeUserProfilePicture }) {
+
     // Realtime data collection 📮
     const FirebasePostRealTimeData = firebaseInsta.database();
     const FirebaseFirestore = firebaseInsta.firestore();
@@ -201,7 +201,6 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                                                     comment={eachcom.data().comments}
                                                     postedOn={eachcom.data().postedOn}
                                                     postID={postID}
-                                                    
                                                     commentLikeCount={eachcom.data().totalLikes}
                                                 ></AppPostComments>
                                             )
@@ -218,17 +217,20 @@ export default function AppPost({ postID, postUsername, postLikesCount, postMedi
                         {/* Post a comment */}
                         <form>
                             <div className="row addComment">
-                                <div className="col-1">
-                                    <img src={SmileyFace} alt="smileyFace" width="40px" style={{ paddingTop: "10px" }}></img>
+                                <div className="col-sm-1" style={{alignSelf: 'center', paddingLeft: 25}}>
+                                    <Avatar src={activeUserProfilePicture} alt={activeUsername}
+                                        className={
+                                            classes.medium
+                                        }></Avatar>
                                 </div>
-                                <div className="col-9" >
+                                <div className="col-sm-9" >
                                     <input className="addCommentInput" onChange={(e) => {
                                         setNewComment(e.target.value)
                                     }} placeholder="Add a comment..."></input>
                                 </div>
-                                <div className="col-2">
+                                <div className="col-sm-2">
                                     <button type="reset" className="PostButton" onClick={() => {
-                                        PostComments("username", newComment)
+                                        PostComments(activeUsername, newComment)
                                     }}>
                                         Post
                                 </button>

@@ -8,6 +8,7 @@ import HeartLogo from './static/heartLogo.png'
 import SearchLogo from './static/searchLogo.png'
 import ProfileLogo from './static/profileLogo.png'
 import firebase from 'firebase'
+import { Button } from 'bootstrap';
 
 
 
@@ -28,6 +29,18 @@ export default function AppHeader(props) {
     const username = props.username;
     const profilepicture = props.profilepicture;
     const logout = props.logout.bind();
+    const login = props.login.bind();
+    const isUser = props.isUser;
+
+    const avatarOrLoginArea = isUser ? <Avatar alt={username}
+        className={
+            avatarStyle.small
+        }
+        src={profilepicture}
+        onClick={logout}
+    /> : <button className = "btn btn-sm btn-primary" onClick = {login}> Login </button>
+
+
 
     return (
         <div>
@@ -57,13 +70,7 @@ export default function AppHeader(props) {
                                     <div className="col-sm-2 text-center"><img src={HeartLogo} alt="heart"
                                         width="30px" /></div>
                                     <div className="col-sm-2">
-                                        <Avatar alt='Vivek Vijayan'
-                                            className={
-                                                avatarStyle.small
-                                            }
-                                            src="http://logo"
-                                            onClick = {logout}
-                                        />
+                                        {avatarOrLoginArea}
                                     </div>
                                 </div>
                             </div>

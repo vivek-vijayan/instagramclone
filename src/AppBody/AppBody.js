@@ -13,6 +13,7 @@ export default function AppBody(props) {
     // getting the props
     const username = props.username;
     const profilepicture = props.profilepicture;
+    const logout = props.logout.bind();
 
     const [instagramPost, setInstagramPost] = useState([])
     // getting the post information from the server 🚀
@@ -36,6 +37,7 @@ export default function AppBody(props) {
                                             postLikesCount = {item.data().postLikesCount}
                                             postPublishedOn={item.data().postPublishedOn}
                                             activeUsername = {username}
+                                            activeUserProfilePicture = {profilepicture}
                                             />
                                     </div>
                                 )
@@ -43,7 +45,7 @@ export default function AppBody(props) {
                             <AppPostLoading></AppPostLoading>
                     </div>
                     <div className="col-sm-4">
-                        <AppSideBar></AppSideBar>
+                        <AppSideBar username = {username} logout = {logout} profilepicture = {profilepicture} ></AppSideBar>
                     </div>
                 </div>
             </div>

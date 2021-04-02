@@ -14,6 +14,8 @@ export default function AppPostComments(props) {
     var commentID = props.commentID;
     var postID = props.postID;
     var commentLikeCount = props.commentLikeCount;
+    var username = props.username;
+    var profilepicture = props.profilepicture
 
     const FirebaseCommentSection = firebaseInsta.firestore().collection('InstagramPost').doc(postID).collection('commentsSection').doc(commentID)
 
