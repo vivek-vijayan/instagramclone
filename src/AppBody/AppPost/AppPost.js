@@ -8,7 +8,6 @@ import WhiteHeart from './static/whiteheart.png'
 import HeartRed from './static/like_red.png'
 import Share from './static/share.png'
 import Comment from './static/comment.png'
-import SmileyFace from './static/SmileyFace.png'
 import { useDoubleTap } from 'use-double-tap'
 
 var blankUsernameBackgroundColors = ['purple', 'red', 'green', 'orange']
@@ -40,29 +39,15 @@ export default function AppPost({ postID,
     let likesCount = FirebasePostRealTimeData.ref(`post/${postID}/likesCount`);
     let comments = FirebaseFirestore.collection('InstagramPost').doc(postID);
 
-    var ILikePost = false
-    var IHeartPost = Heart
-    useEffect(() => {
-        const LikesSnapshot = FirebaseFirestore.collection(`InstagramPost`).doc(postID).collection(`usersLiked`).where('email', '==', activeUserEmailID).get();
-        if (LikesSnapshot.empty) {
-            ILikePost = false
-            IHeartPost = Heart
-        }
-        else {
-            ILikePost = true
-            IHeartPost = HeartRed
-        }
-    }, [])
-    
     // states collections
     const classes = usestyle();
     const [newComment, setNewComment] = useState("")
     const [username, setusername] = useState(activeUsername)
     const [likes, setlikes] = useState(postLikesCount);
     const [commentsList, setcommentsList] = useState([])
-    const [ILike, setILike] = useState(ILikePost)
+    const [ILike, setILike] = useState(false)
     const [AnimeClass, setAnimeClass] = useState("")
-    const [HeartPng, setHeartPng] = useState(IHeartPost)
+    const [HeartPng, setHeartPng] = useState(Heart)
     const [PopUpHeartWhite, setPopUpHeartWhite] = useState("likePostWhiteHide")
 
     var LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>;
@@ -72,8 +57,6 @@ export default function AppPost({ postID,
         else if (likes > 1) LikesInformation = <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 5 }}>{likes} Likes</p>
         else LikesInformation = ""
     }
-
-
 
     const bind = useDoubleTap((event) => {
         LikeActionHandler()
@@ -89,35 +72,58 @@ export default function AppPost({ postID,
         comments.collection('commentsSection').onSnapshot((eachComments) => {
             setcommentsList(eachComments.docs.map(doc => doc))
         })
-
-
     })
 
-    function AddLike() {
+    function AddLike(action) {
         setILike(true)
         setAnimeClass("likePost")
         setHeartPng(HeartRed)
-        setPopUpHeartWhite("likePostWhite")
         LikesStatusUpdater()
-        FirebasePostRealTimeData.ref(`post/${postID}`).child('likesCount').set(likes + 1)
-        FirebaseFirestore.collection('InstagramPost').doc(postID).collection('usersLiked').add({
-            liked: true,
-            email: activeUserEmailID
-        })
-
+        if (action === "post") {
+            setPopUpHeartWhite("likePostWhite")
+            FirebasePostRealTimeData.ref(`post/${postID}`).child('likesCount').set(likes + 1)
+            FirebaseFirestore.collection('InstagramPost').doc(postID).collection('usersLiked').doc(activeUserEmailID).set({
+                liked: true,
+                email: activeUserEmailID
+            }).then(() => {
+                alert('liek recored')
+            })
+        }
     }
-    function DisLike() {
+    function DisLike(action) {
         setILike(false)
         setAnimeClass("")
         setHeartPng(Heart)
         setPopUpHeartWhite("likePostWhiteHide")
         LikesStatusUpdater()
-        FirebasePostRealTimeData.ref(`post/${postID}`).child('likesCount').set(likes - 1)
+        const LikesSnapshot = FirebaseFirestore.collection('InstagramPost').doc(postID).collection('usersLiked').where('email', '==', activeUserEmailID).get();
+        if (action === "post") {
+
+            if (LikesSnapshot.empty) {
+                console.log('No record to remove')
+            }
+            else {
+                FirebasePostRealTimeData.ref(`post/${postID}`).child('likesCount').set(likes - 1)
+                FirebaseFirestore.collection('InstagramPost').doc(postID).collection('usersLiked').doc(activeUserEmailID).delete().then(() => {
+                    
+                })
+            }
+        }
     }
 
     function LikeActionHandler() {
-        ILike ? DisLike() : AddLike()
+        ILike ? DisLike("post") : AddLike("post")
     }
+
+    useEffect(() => {
+        const LikesSnapshot = FirebaseFirestore.collection('InstagramPost').doc(postID).collection('usersLiked').where('email', '==', activeUserEmailID).get();
+        if (LikesSnapshot.empty) {
+            DisLike("changeStatus")
+        }
+        else {
+            AddLike("changeStatus")
+        }
+    }, [])
 
     function PostComments(userID, comment, emailID) {
         var d = new Date()
