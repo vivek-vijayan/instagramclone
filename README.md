@@ -4,6 +4,8 @@
 ![python](https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white)
 ![python](https://img.shields.io/badge/-Firebase-yellow?style=flat-square&logo=firebase&logoColor=white)
 
+**Phase**: Development <img src="progress.gif" width="30px"/>
+
 **Screenshot**:
 <img src="sc1.png"/>
 <img src="sc2.png"/>
